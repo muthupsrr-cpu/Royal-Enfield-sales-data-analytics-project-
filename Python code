@@ -1,0 +1,122 @@
+from google.colab import files
+uploaded = files.upload()
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.read_excel('royal_enfield_sales.xlsx', header=1)
+print(df.shape)
+print(df.head())
+
+
+print(df.columns)
+print(df.dtypes)
+print(df.isnull().sum())
+
+
+
+print(df.describe())
+
+
+print(df['Model'].value_counts())
+
+model_counts = df['Model'].value_counts()
+
+plt.figure(figsize=(10,6))
+plt.bar(model_counts.index, model_counts.values, color='orange')
+plt.title('Royal Enfield - Model Wise Sales')
+plt.xlabel('Model')
+plt.ylabel('Number of Bikes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+
+state_counts = df['State'].value_counts()
+
+plt.figure(figsize=(12,6))
+plt.bar(state_counts.index, state_counts.values, color='steelblue')
+plt.title('Royal Enfield - State Wise Sales')
+plt.xlabel('State')
+plt.ylabel('Number of Bikes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+
+year_counts = df['Year of Manufacture'].value_counts().sort_index()
+
+plt.figure(figsize=(12,6))
+plt.plot(year_counts.index, year_counts.values, marker='o', color='green', linewidth=2)
+plt.title('Royal Enfield - Year Wise Sales Trend')
+plt.xlabel('Year')
+plt.ylabel('Number of Bikes')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+
+
+owner_counts = df['Owner Type'].value_counts()
+
+plt.figure(figsize=(8,6))
+plt.bar(owner_counts.index, owner_counts.values, color=['purple','orange','green'])
+plt.title('Royal Enfield - Owner Type Distribution')
+plt.xlabel('Owner Type')
+plt.ylabel('Number of Bikes')
+plt.tight_layout()
+plt.show()
+
+
+
+plt.figure(figsize=(10,6))
+plt.scatter(df['Price (INR)'], df['Resale Price (INR)'], alpha=0.5, color='teal')
+plt.title('Royal Enfield - Price vs Resale Price')
+plt.xlabel('Original Price (INR)')
+plt.ylabel('Resale Price (INR)')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+
+
+model_avg_price = df.groupby('Model')['Price (INR)'].mean().sort_values(ascending=False)
+
+plt.figure(figsize=(10,6))
+plt.bar(model_avg_price.index, model_avg_price.values, color='coral')
+plt.title('Royal Enfield - Model Wise Average Price')
+plt.xlabel('Model')
+plt.ylabel('Average Price (INR)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+
+state_avg_resale = df.groupby('State')['Resale Price (INR)'].mean().sort_values(ascending=True)
+
+plt.figure(figsize=(10,6))
+plt.barh(state_avg_resale.index, state_avg_resale.values, color='skyblue')
+plt.title('Royal Enfield - State Wise Average Resale Price')
+plt.xlabel('Average Resale Price (INR)')
+plt.ylabel('State')
+plt.tight_layout()
+plt.show()
+
+
+
+
+model_avg_mileage = df.groupby('Model')['Mileage (km/l)'].mean().sort_values(ascending=False)
+
+plt.figure(figsize=(10,6))
+plt.bar(model_avg_mileage.index, model_avg_mileage.values, color='mediumseagreen')
+plt.title('Royal Enfield - Model Wise Average Mileage')
+plt.xlabel('Model')
+plt.ylabel('Average Mileage (km/l)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
